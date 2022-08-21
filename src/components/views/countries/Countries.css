@@ -1,0 +1,70 @@
+/* Country List */
+.country-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 30px 0;
+  width: 100%;
+}
+.countries-topbar {
+  background-color: white;
+  padding: 10px;
+  width: 100%;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+.countries-topbar input {
+  height: 30px;
+  padding: 10px;
+  padding-left: 0;
+  font-size: 14px;
+  appearance: none;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid lightgray;
+}
+/* Country Card */
+.country-item {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: white;
+}
+.box-shadow {
+  box-shadow: 0px 0px 6px 0px rgb(0 0 0 / 20%);
+}
+.country-item img {
+  width: 80px;
+}
+
+/* Country Modal */
+.country-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  margin: 20px;
+}
+.country-modal .contents {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.country-modal .contents img {
+  width: 200px;
+}
+.text-wrap {
+  word-break: break-word;
+}
+
+@media (min-width: 768px) {
+  .country-modal {
+    width: 700px;
+  }
+  .country-modal .contents {
+    flex-direction: row;
+  }
+}
