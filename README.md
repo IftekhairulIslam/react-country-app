@@ -5,4 +5,5 @@ A simple app which will show you country info. To see it in action please visit 
 ## Acknowledgement
 
 Frontend: React, HTML, CSS, Axios, Framer Motion
-Backend: An open source API from (REST COUNTRIES)[https://restcountries.com]
+
+Backend: An open source API from [REST COUNTRIES](https://restcountries.com)
