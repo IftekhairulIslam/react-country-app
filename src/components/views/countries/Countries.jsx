@@ -1,26 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import "./Countries.css";
 import { getCountries } from "../../../services/countryService";
 import LoadingSpinner from "./../../ui/LoadingSpinner";
 import CountryList from "./CountryList";
 import CountriesTopBar from "./CountriesTopBar";
+import {
+  countryReducer,
+  INITIAL_COUNTRIES_STATE,
+  COUNTRIES_ACTION_TYPE,
+} from "../../../reducer/countryReducer";
 
 const Countries = () => {
-  const [countries, setCountries] = useState([]);
-  const [countriesError, setCountriesError] = useState(null);
-  const [loadingCountries, setLoadingCountries] = useState(true);
+  const [countries, dispatch] = useReducer(
+    countryReducer,
+    INITIAL_COUNTRIES_STATE
+  );
+
   const [filterText, setFilterText] = useState("");
 
   const loadCountries = async () => {
-    setLoadingCountries(true);
-    setCountriesError(null);
+    dispatch({ type: COUNTRIES_ACTION_TYPE.API_CALL_STARTED });
     try {
       const countries = await getCountries();
-      setCountries(countries);
+      dispatch({
+        type: COUNTRIES_ACTION_TYPE.API_CALL_SUCCESS,
+        payload: countries,
+      });
     } catch (error) {
-      setCountriesError(error);
+      dispatch({ type: COUNTRIES_ACTION_TYPE.API_CALL_FAILED, payload: error });
     }
-    setLoadingCountries(false);
   };
 
   useEffect(() => {
@@ -28,15 +36,15 @@ const Countries = () => {
   }, []);
 
   /* Loading */
-  if (loadingCountries) {
+  if (countries.loading) {
     return <LoadingSpinner color="black" />;
   }
 
   /* Error */
-  if (countriesError) {
+  if (countries.error) {
     return (
       <div style={{ margin: "auto", textAlign: "center" }}>
-        {countriesError.message} <br />
+        {countries.error.message} <br />
         <button onClick={loadCountries}>Load Again</button>
       </div>
     );
@@ -46,7 +54,7 @@ const Countries = () => {
   return (
     <>
       <CountriesTopBar value={filterText} onChange={setFilterText} />
-      <CountryList countries={countries} filterText={filterText} />
+      <CountryList countries={countries.data} filterText={filterText} />
     </>
   );
 };
