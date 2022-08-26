@@ -4,11 +4,12 @@ import { getCountries } from "../../../services/countryService";
 import LoadingSpinner from "./../../ui/LoadingSpinner";
 import CountryList from "./CountryList";
 import CountriesTopBar from "./CountriesTopBar";
-import {
-  countryReducer,
+import countryReducer, {
+  startLoadingCountries,
+  successtLoadingCountries,
+  failedtLoadingCountries,
   INITIAL_COUNTRIES_STATE,
-  COUNTRIES_ACTION_TYPE,
-} from "../../../reducer/countryReducer";
+} from "../../../store/countryReducer";
 
 const Countries = () => {
   const [countries, dispatch] = useReducer(
@@ -19,15 +20,12 @@ const Countries = () => {
   const [filterText, setFilterText] = useState("");
 
   const loadCountries = async () => {
-    dispatch({ type: COUNTRIES_ACTION_TYPE.API_CALL_STARTED });
+    dispatch(startLoadingCountries());
     try {
       const countries = await getCountries();
-      dispatch({
-        type: COUNTRIES_ACTION_TYPE.API_CALL_SUCCESS,
-        payload: countries,
-      });
+      dispatch(successtLoadingCountries(countries));
     } catch (error) {
-      dispatch({ type: COUNTRIES_ACTION_TYPE.API_CALL_FAILED, payload: error });
+      dispatch(failedtLoadingCountries(error));
     }
   };
 

@@ -4,13 +4,31 @@ export const INITIAL_COUNTRIES_STATE = {
   error: null,
 };
 
+/* ActionTypes */
 export const COUNTRIES_ACTION_TYPE = {
   API_CALL_STARTED: "API_CALL_STARTED",
   API_CALL_SUCCESS: "API_CALL_SUCCESS",
   API_CALL_FAILED: "API_CALL_FAILED",
 };
 
-export const countryReducer = (state, action) => {
+/* Actions / ActionCreators */
+export const startLoadingCountries = () => {
+  return { type: COUNTRIES_ACTION_TYPE.API_CALL_STARTED };
+};
+
+export const successtLoadingCountries = (countries) => {
+  return {
+    type: COUNTRIES_ACTION_TYPE.API_CALL_SUCCESS,
+    payload: countries,
+  };
+};
+
+export const failedtLoadingCountries = (error) => {
+  return { type: COUNTRIES_ACTION_TYPE.API_CALL_FAILED, payload: error };
+};
+
+/* Reducer */
+const countryReducer = (state, action) => {
   switch (action.type) {
     case COUNTRIES_ACTION_TYPE.API_CALL_STARTED:
       return {
@@ -31,3 +49,5 @@ export const countryReducer = (state, action) => {
       return state;
   }
 };
+
+export default countryReducer;
